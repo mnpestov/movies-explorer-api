@@ -2,7 +2,6 @@ const httpConstants = require('http2').constants;
 const { Movie } = require('../models/movie');
 const NotFoundError = require('../errors/not-found-errors');
 const ForbidenError = require('../errors/forbiden-errors');
-const { log } = require('console');
 
 exports.getMovies = async (req, res, next) => {
   try {

@@ -8,27 +8,6 @@ const ConflictError = require('../errors/conflict-errors');
 
 const SOLT_ROUNDS = 10;
 
-// exports.getUsers = async (req, res, next) => {
-//   try {
-//     const users = await User.find({});
-//     res.status(httpConstants.HTTP_STATUS_OK)
-//       .send(users);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-// exports.getUserById = async (req, res, next) => {
-//   try {
-//     const userById = await User.findById(req.params.id);
-//     if (!userById) {
-//       throw new NotFoundError('not found');
-//     }
-//     res.status(httpConstants.HTTP_STATUS_OK)
-//       .send(userById);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 exports.getUserInfo = async (req, res, next) => {
   try {
     const userById = await User.findById(req.user._id);
@@ -108,20 +87,3 @@ exports.updateUser = async (req, res, next) => {
     next(err);
   }
 };
-// exports.updateAvatar = async (req, res, next) => {
-//   try {
-//     const { avatar } = req.body;
-//     const updatedAvatar = await User.findByIdAndUpdate(
-//       req.user._id,
-//       { avatar },
-//       { new: true, runValidators: true },
-//     );
-//     if (!updatedAvatar) {
-//       throw new NotFoundError('not found');
-//     }
-//     res.status(httpConstants.HTTP_STATUS_OK)
-//       .send(updatedAvatar);
-//   } catch (err) {
-//     next(err);
-//   }
-// };

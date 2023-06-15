@@ -1,8 +1,8 @@
-// require('dotenv').config();
-// const helmet = require('helmet');
+require('dotenv').config();
+const helmet = require('helmet');
 const express = require('express');
 const mongoose = require('mongoose');
-// const cors = require('cors');
+const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate');
 const { routes } = require('./routes');
 const {
@@ -12,18 +12,19 @@ const {
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
-const PORT = 3000;
 const app = express();
 
-// app.use(cors({
-//   origin: [
-//     'https://mnpestov.nomoredomains.rocks',
-//     'http://mnpestov.nomoredomains.rocks',
-//     'http://localhost:3001',
-//   ],
-// }));
-// app.use(helmet());
+app.use(helmet());
+app.use(cors({
+  origin: [
+    'https://diplommnpestov.nomoredomains.rocks',
+    'http://diplommnpestov.nomoredomains.rocks',
+    'http://localhost:3001',
+  ],
+}));
+
 app.use(requestLogger);
 
 app.post('/signin', express.json(), celebrate({
@@ -46,7 +47,7 @@ app.use(errors());
 app.use(errorHandler);
 
 async function connect() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/movies-explorer-db ', {
+  await mongoose.connect(DB_URL, {
     useNewUrlParser: true,
   });
   await app.listen(PORT);
