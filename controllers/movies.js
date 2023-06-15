@@ -5,7 +5,8 @@ const ForbidenError = require('../errors/forbiden-errors');
 
 exports.getMovies = async (req, res, next) => {
   try {
-    const movies = await Movie.find({});
+    const owner = req.user._id;
+    const movies = await Movie.find({ owner });
     res.status(httpConstants.HTTP_STATUS_OK)
       .send(movies);
   } catch (err) {
@@ -14,9 +15,34 @@ exports.getMovies = async (req, res, next) => {
 };
 exports.createMovie = async (req, res, next) => {
   try {
-    const { country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId } = req.body;
+    const {
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailerLink,
+      nameRU,
+      nameEN,
+      thumbnail,
+      movieId,
+    } = req.body;
     const owner = req.user._id;
-    const newMovie = await Movie.create({ country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId, owner });
+    const newMovie = await Movie.create({
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailerLink,
+      nameRU,
+      nameEN,
+      thumbnail,
+      movieId,
+      owner,
+    });
     const movie = await Movie.populate(newMovie, 'owner');
     res.status(httpConstants.HTTP_STATUS_CREATED)
       .send(movie);
