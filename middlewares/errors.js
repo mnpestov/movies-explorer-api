@@ -7,7 +7,7 @@ module.exports = ((err, req, res, next) => {
   } else if (err.message === 'not found') {
     res.status(httpConstants.HTTP_STATUS_NOT_FOUND)
       .send({ message: 'Пользователь с указанным id не найден' });
-  } else if (err.message === 'card not found') {
+  } else if (err.message === 'movie not found') {
     res.status(httpConstants.HTTP_STATUS_NOT_FOUND)
       .send({ message: 'Карточка с указанным id не найдена' });
   } else if (err.message === 'wrong login or password') {
@@ -25,7 +25,7 @@ module.exports = ((err, req, res, next) => {
   } else if (err.name === 'JsonWebTokenError') {
     res.status(httpConstants.HTTP_STATUS_UNAUTHORIZED)
       .send({ message: 'С токеном что-то не так' });
-  } else if (err.message === 'OwnerID does not match cardID') {
+  } else if (err.message === 'OwnerID does not match movieID') {
     res.status(httpConstants.HTTP_STATUS_FORBIDDEN)
       .send({ message: 'ID владельца карточки не совпадает с ID карты' });
   } else if (err.message === 'Маршрут не найден') {
